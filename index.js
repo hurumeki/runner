@@ -98,10 +98,7 @@ Main(require("fs").readFileSync("/dev/stdin", "utf8"));
     }
   },
   mounted() {
-    this.addTest({
-      input: '1',
-      expected: '2'
-    })
+    this.addTest()
   },
   methods: {
     onChangeTab(tabName) {
@@ -139,7 +136,6 @@ Main(require("fs").readFileSync("/dev/stdin", "utf8"));
       this.tests[index].result = undefined
       return run(this.code, this.language, input)
         .then((data) => {
-          console.log(data)
           if (data.stderr) {
             this.tests[index].output = data.stderr
             this.tests[index].result = false
