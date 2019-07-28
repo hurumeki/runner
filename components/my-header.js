@@ -25,12 +25,6 @@ export default {
           </template>
           <span>Test ({{ successCount }}/{{ testCount }})</span>
         </a>
-        <a class="navbar-item is-tab" :class="{ 'is-active': activeTabName == 'setting' }" @click="changeTab('setting')">
-          <span class="icon is-medium">
-            <i class="fas fa-cog" aria-hidden="true"></i>
-          </span>
-          <span>Setting</span>
-        </a>
         <a role="button"
           class="navbar-burger burger"
           :class="{ 'is-active': isActiveMenu }"
@@ -44,6 +38,12 @@ export default {
         </a>
       </div>
       <div class="navbar-menu" :class="{ 'is-active': isActiveMenu }">
+        <a class="navbar-item is-tab" :class="{ 'is-active': activeTabName == 'setting' }" @click="changeTab('setting')">
+          <span class="icon is-medium">
+            <i class="fas fa-cog" aria-hidden="true"></i>
+          </span>
+          <span>Setting</span>
+        </a>
         <div class="navbar-end">
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
@@ -88,6 +88,7 @@ export default {
   },
   methods: {
     changeTab(tabName) {
+      this.isActiveMenu = false
       this.$emit("change-tab", tabName);
     },
     toggleMenu() {

@@ -175,7 +175,7 @@ let app = new Vue({
             @delete-item="onDeleteTest"
             @key-ctrl-alt-h="onChangeTab('code')"
             @key-ctrl-alt-l="onChangeTab('setting')"></test-form>
-          <button class="button is-secondary" @click="addTest">
+          <button class="button mb100 is-secondary" @click="addTest">
             <span class="icon">
               <i class="fas fa-plus"></i>
             </span>
