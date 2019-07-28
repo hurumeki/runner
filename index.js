@@ -348,7 +348,7 @@ let app = new Vue({
             throw new Error("stderr exists");
           }
           this.tests[index].output = data.stdout;
-          if (expected != undefined) {
+          if (expected != '') {
             this.tests[index].result = expected == data.stdout;
           }
           this.tests[index].running = false;
