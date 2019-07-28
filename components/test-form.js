@@ -6,13 +6,21 @@ export default {
           {{ index + 1 }}
         </div>
         <div class="">
-          <button class="button is-primary is-small" @click="run">
+          <button
+            class="button is-primary is-small"
+            @focus="(ev) => ev.target.classList.add('is-inverted')"
+            @blur="(ev) => ev.target.classList.remove('is-inverted')"
+            @click="run">
             <span class="icon">
               <i class="fas fa-play"></i>
             </span>
             <span>Run</span>
           </button>
-          <button class="button is-danger is-small" @click="clear">
+          <button
+            class="button is-danger is-small"
+            @focus="(ev) => ev.target.classList.add('is-inverted')"
+            @blur="(ev) => ev.target.classList.remove('is-inverted')"
+            @click="clear">
             <span class="icon">
               <i class="fas fa-eraser"></i>
             </span>
@@ -28,7 +36,15 @@ export default {
             <div class="message is-small">
               <div class="message-body">
                 <div class="control">
-                  <textarea class="textarea" placeholder="input" v-model="inputText" @change="changeInput"></textarea>
+                  <textarea
+                    ref="input"
+                    class="textarea"
+                    placeholder="input"
+                    v-model="inputText"
+                    @change="changeInput"
+                    @keyup.ctrl.alt.enter.exact="run"
+                    @keyup.ctrl.alt.h.exact="$emit('key-ctrl-alt-h')"
+                    @keyup.ctrl.alt.l.exact="$emit('key-ctrl-alt-l')"></textarea>
                 </div>
               </div>
             </div>
@@ -37,7 +53,15 @@ export default {
             <div class="message is-small is-info">
               <div class="control">
                 <div class="message-body">
-                    <textarea class="textarea" placeholder="expected" v-model="expectedText" @change="changeExpected"></textarea>
+                  <textarea
+                    ref="expected"
+                    class="textarea"
+                    placeholder="expected"
+                    v-model="expectedText"
+                    @change="changeExpected"
+                    @keyup.ctrl.alt.enter.exact="run"
+                    @keyup.ctrl.alt.h.exact="$emit('key-ctrl-alt-h')"
+                    @keyup.ctrl.alt.l.exact="$emit('key-ctrl-alt-l')"></textarea>
                 </div>
               </div>
             </div>
@@ -46,7 +70,12 @@ export default {
             <div class="message is-small" :class="{ 'is-success': result, 'is-danger': !result }">
               <div class="message-body">
                 <div class="control" :class="{ 'is-loading': running }">
-                  <textarea class="textarea" placeholder="output" readonly v-model="output"></textarea>
+                  <textarea
+                    ref="output"
+                    class="textarea"
+                    placeholder="output"
+                    readonly
+                    v-model="output"></textarea>
                 </div>
               </div>
             </div>
@@ -87,6 +116,8 @@ export default {
   },
   methods: {
     run() {
+      this.emitChangeInput(this.inputText)
+      this.emitChangeExpected(this.expectedText)
       this.$emit("run-item", this.index, this.input, this.expected);
     },
     clear() {
@@ -96,10 +127,16 @@ export default {
       this.$emit("delete-item", this.index);
     },
     changeInput(ev) {
-      this.$emit("change-input", this.index, ev.target.value);
+      this.emitChangeInput(ev.target.value)
     },
     changeExpected(ev) {
-      this.$emit("change-expected", this.index, ev.target.value);
+      this.emitChangeExpected(ev.target.value)
+    },
+    emitChangeInput(value) {
+      this.$emit("change-input", this.index, value);
+    },
+    emitChangeExpected(value) {
+      this.$emit("change-expected", this.index, value);
     }
   }
-};
+}

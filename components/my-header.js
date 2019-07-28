@@ -31,12 +31,45 @@ export default {
           </span>
           <span>Setting</span>
         </a>
-        <a role="button" class="navbar-burger burger" :class="{ 'is-active': isActiveMenu }" aria-label="menu" aria-expanded="false"
-          data-target="navbarBasicExample" @click="toggleMenu">
+        <a role="button"
+          class="navbar-burger burger"
+          :class="{ 'is-active': isActiveMenu }"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+          @click="toggleMenu">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
+      </div>
+      <div class="navbar-menu" :class="{ 'is-active': isActiveMenu }">
+        <div class="navbar-end">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              More
+            </a>
+
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item" @click="onClickMenu('shortcuts')">
+                Shortcuts
+              </a>
+              <a class="navbar-item" href="https://github.com/hurumeki/runner" target="new">
+                GitHub
+              </a>
+              <a class="navbar-item" href="https://twitter.com/hurumeki" target="new">
+                Contact
+              </a>
+              <a class="navbar-item" href="https://github.com/hurumeki/runner/issues" target="new">
+               Report an issue
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item" @click="onClickMenu('licenses')">
+                Third party Licenses
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
     </header>
@@ -59,6 +92,9 @@ export default {
     },
     toggleMenu() {
       this.isActiveMenu = !this.isActiveMenu;
+    },
+    onClickMenu(menu) {
+      this.$emit('click-menu', menu)
     }
   }
-};
+}

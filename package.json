@@ -1,0 +1,26 @@
+{
+  "name": "runner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev": "live-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hurumeki/runner.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hurumeki/runner/issues"
+  },
+  "homepage": "https://github.com/hurumeki/runner#readme",
+  "dependencies": {
+    "live-server": "^1.2.1"
+  }
+}
