@@ -37,7 +37,7 @@ export default {
           aria-label="menu"
           aria-expanded="false"
           data-target="navbarBasicExample"
-          @click="toggleMenu">
+          @click="toggleMenu($event)">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -50,9 +50,9 @@ export default {
           </span>
           <span>Setting</span>
         </a>
-        <div class="navbar-end">
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
+        <div class="navbar-end" @mouseenter="toggleMenu($event, true)" @mouseleave="toggleMenu($event, false)">
+          <div class="navbar-item has-dropdown" :class="{ 'is-active': isActiveMenu }">
+            <a class="navbar-link" @click="toggleMenu($event)">
               More
             </a>
 
@@ -97,8 +97,9 @@ export default {
       this.isActiveMenu = false
       this.$emit("change-tab", tabName);
     },
-    toggleMenu() {
-      this.isActiveMenu = !this.isActiveMenu;
+    toggleMenu(ev, bool) {
+      console.log(bool)
+      this.isActiveMenu = bool !== undefined ? bool : !this.isActiveMenu;
     },
     onClickMenu(menu) {
       this.$emit('click-menu', menu)
