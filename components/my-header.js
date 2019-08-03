@@ -25,6 +25,12 @@ export default {
           </template>
           <span>Test ({{ successCount }}/{{ testCount }})</span>
         </a>
+        <a class="navbar-item is-tab is-hidden-mobile" :class="{ 'is-active': activeTabName == 'setting' }" @click="changeTab('setting')">
+          <span class="icon is-medium">
+            <i class="fas fa-cog" aria-hidden="true"></i>
+          </span>
+          <span>Setting</span>
+        </a>
         <a role="button"
           class="navbar-burger burger"
           :class="{ 'is-active': isActiveMenu }"
@@ -38,7 +44,7 @@ export default {
         </a>
       </div>
       <div class="navbar-menu" :class="{ 'is-active': isActiveMenu }">
-        <a class="navbar-item is-tab" :class="{ 'is-active': activeTabName == 'setting' }" @click="changeTab('setting')">
+        <a class="navbar-item is-tab is-hidden-tablet" :class="{ 'is-active': activeTabName == 'setting' }" @click="changeTab('setting')">
           <span class="icon is-medium">
             <i class="fas fa-cog" aria-hidden="true"></i>
           </span>
