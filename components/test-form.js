@@ -42,9 +42,7 @@ export default {
                     placeholder="input"
                     v-model="inputText"
                     @change="changeInput"
-                    @keyup.ctrl.alt.enter.exact="run"
-                    @keyup.ctrl.alt.h.exact="$emit('key-ctrl-alt-h')"
-                    @keyup.ctrl.alt.l.exact="$emit('key-ctrl-alt-l')"></textarea>
+                    @keyup.alt.enter.exact="run"></textarea>
                 </div>
               </div>
             </div>
@@ -59,9 +57,7 @@ export default {
                     placeholder="expected"
                     v-model="expectedText"
                     @change="changeExpected"
-                    @keyup.ctrl.alt.enter.exact="run"
-                    @keyup.ctrl.alt.h.exact="$emit('key-ctrl-alt-h')"
-                    @keyup.ctrl.alt.l.exact="$emit('key-ctrl-alt-l')"></textarea>
+                    @keyup.alt.enter.exact="run"></textarea>
                 </div>
               </div>
             </div>

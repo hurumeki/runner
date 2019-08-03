@@ -22,20 +22,6 @@ export default {
 */</pre>
     </li>
     <li>
-      <a href="https://github.com/jaywcjlove/hotkeys/blob/master/LICENSE">
-        Hotkeys
-      </a>
-      <pre>/*!
-* hotkeys-js v3.6.12
-* A simple micro-library for defining and dispatching keyboard shortcuts. It has no dependencies.
-*
-* Copyright (c) 2019 kenny wong &lt;wowohoo@qq.com&gt;
-* http://jaywcjlove.github.io/hotkeys
-*
-* Licensed under the MIT license.
-*/</pre>
-    </li>
-    <li>
       <a href="https://raw.githubusercontent.com/lodash/lodash/4.17.15-npm/LICENSE">
         Lodash
       </a>

@@ -9,8 +9,7 @@ export default {
     theme: String,
     mode: String,
     keyboard: String,
-    options: Object,
-    commands: Array
+    options: Object
   },
   data() {
     return {
@@ -35,10 +34,7 @@ export default {
     },
     options() {
       this.setOptions()
-    },
-    commands(newVal, oldVal) {
-      this.setCommands(newVal, oldVal);
-    },
+    }
   },
   mounted() {
     this.editor = ace.edit("editor");
@@ -49,22 +45,10 @@ export default {
       this.$emit("change-code", this.beforeCode);
     });
 
-    this.editor.commands.addCommand({
-      name: "showKeyboardShortcuts",
-      bindKey: { win: "Ctrl-Alt-q", mac: "Command-Alt-q" },
-      exec: function(editor) {
-        ace.config.loadModule("ace/ext/keybinding_menu", function(module) {
-          module.init(editor);
-          editor.showKeyboardShortcuts();
-        });
-      }
-    });
-
     this.setMode();
     this.setTheme();
     this.setKeyboard();
     this.setOptions(this.options);
-    this.setCommands(this.commands);
   },
   methods: {
     setMode() {
@@ -82,14 +66,6 @@ export default {
     },
     setOptions() {
       this.editor.setOptions(this.options)
-    },
-    setCommands(newVal = [], oldVal = []) {
-      oldVal.forEach((name) => {
-        this.editor.commands.removeCommand(name)
-      });
-      newVal.forEach(({ name, bindKey, exec }) => {
-        this.editor.commands.addCommand({ name, bindKey, exec: exec.bind(this) })
-      });
     }
   }
 }

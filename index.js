@@ -6,7 +6,6 @@ import {
   THEMES,
   KEYBOARDS,
   EDITOR_OPTION_RULES,
-  COMMANDS,
   TABS
 } from "./lib/const.js";
 
@@ -108,13 +107,6 @@ if (tests.length == 0) {
   tests.push(Object.assign({}, TEST_CASE_DEFAULT));
 }
 
-let activeCommands = {
-  runAllTest: true,
-  loadSampleCode: true,
-  forcusRightTab: true,
-  forcusLeftTab: true
-};
-
 let app = new Vue({
   el: "#app",
   template: `
@@ -134,13 +126,8 @@ let app = new Vue({
             :mode="mode"
             :theme="theme"
             :keyboard="keyboard"
-            :commands="activeCommands"
             :options="editorOptions"
             @change-code="onChangeCode"
-            @key-ctrl-alt-enter="onRunAll()"
-            @key-ctrl-alt-h="onChangeTab('setting')"
-            @key-ctrl-alt-l="onChangeTab('test')"
-            @key-ctrl-alt-r="loadSampleCode()"
             ></editor>
         </section>
         <section class="section test" :class="{ 'is-block': activeTabName == 'test' }">
@@ -172,9 +159,7 @@ let app = new Vue({
             @change-expected="onChangeExpected"
             @run-item="onRunItem"
             @clear-item="onClearItem"
-            @delete-item="onDeleteTest"
-            @key-ctrl-alt-h="onChangeTab('code')"
-            @key-ctrl-alt-l="onChangeTab('setting')"></test-form>
+            @delete-item="onDeleteTest"></test-form>
           <button class="button mb100 is-secondary" @click="addTest">
             <span class="icon">
               <i class="fas fa-plus"></i>
@@ -441,29 +426,23 @@ let app = new Vue({
   }
 });
 
-hotkeys("ctrl+alt+l,ctrl+alt+h,ctrl+alt+enter", function(event, handler) {
-  let idx;
-  switch (handler.key) {
-    case "ctrl+alt+h":
-      idx = TABS.indexOf(app.activeTabName);
-      if (idx == 0) {
-        idx = TABS.length - 1;
-      } else {
-        idx -= 1;
-      }
-      app.onChangeTab(TABS[idx]);
-      break;
-    case "ctrl+alt+l":
-      idx = TABS.indexOf(app.activeTabName);
-      if (idx == TABS.length - 1) {
-        idx = 0;
-      } else {
-        idx += 1;
-      }
-      app.onChangeTab(TABS[idx]);
-      break;
-    case "ctrl+alt+enter":
-      app.onRunAll();
-      break;
+if (/Apple/.test(navigator.vendor)) {
+  window.addEventListener('keypress', keyeventHandler, true)
+} else {
+  window.addEventListener('keyup', keyeventHandler)
+}
+function keyeventHandler(ev) {
+  if (ev.ctrlKey && ev.altKey) {
+    if (ev.key == 1) {
+      app.onChangeTab(TABS[0])
+    } else if (ev.key == 2) {
+      app.onChangeTab(TABS[1])
+    } else if (ev.key == 3) {
+      app.onChangeTab(TABS[2])
+    } else if (ev.key == 'Enter') {
+      app.onRunAll()
+    } else if (ev.key == 'l' || ev.keyCode == 12) {
+      app.loadSampleCode()
+    }
   }
-});
+}
