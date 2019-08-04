@@ -30,12 +30,19 @@ if (query.length > 0) {
   hasParam = true;
   queryArr.forEach(param => {
     let p = param.split("=");
-    if (/\[\]$/.test(p[0])) {
-      let key = p[0].replace("[]", "");
+    let match = /\[(\d*)\]$/.exec(p[0])
+    if (match) {
+      let key = p[0].replace(/\[\d*\]/, "");
+
       if (!params[key]) {
         params[key] = [];
       }
-      params[key].push(p[1]);
+
+      if (match[1] == '') {
+        params[key].push(p[1]);
+      } else {
+        params[key][match[1]] = p[1];
+      }
     } else {
       params[p[0]] = p[1];
     }
