@@ -25,9 +25,22 @@ let hasParam = false;
 let query = location.search.slice(1);
 let queryArr = query.split("&");
 
+// sパラメーターのパース
+// decodeしてJSON.parseした結果をqueryArrに上書き
+let sParam = queryArr.find(param => {
+  let p = param.split("=");
+  return p[0] == 's'
+})
+
+if (sParam) {
+  let q = JSON.parse(decodeURIComponent(sParam.split('=')[1]))
+  queryArr = q.split('&')
+}
+
 let params = {};
 if (query.length > 0) {
   hasParam = true;
+
   queryArr.forEach(param => {
     let p = param.split("=");
     let match = /\[(\d*)\]$/.exec(p[0])
