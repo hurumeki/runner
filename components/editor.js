@@ -52,7 +52,9 @@ export default {
   },
   methods: {
     setMode() {
-      this.editor.session.setMode("ace/mode/" + this.mode);
+      if (this.mode) {
+        this.editor.session.setMode("ace/mode/" + this.mode);
+      }
     },
     setTheme() {
       this.editor.setTheme("ace/theme/" + this.theme);

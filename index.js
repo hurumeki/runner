@@ -1,7 +1,8 @@
+import * as api from "./lib/judge0-api.js";
 import { run } from "./lib/functions.js";
 import {
   TEST_CASE_DEFAULT,
-  LANGUAGES,
+  // LANGUAGES,
   SYNTAX_MODES,
   THEMES,
   KEYBOARDS,
@@ -62,7 +63,7 @@ if (query.length > 0) {
   });
 }
 
-let language = "c";
+let language = "c" || 48;
 let theme = "monokai";
 let keyboard = "";
 let code = "";
@@ -258,7 +259,8 @@ let app = new Vue({
       keyboard: keyboard,
       activeTabName: "code",
       tests: tests,
-      languages: LANGUAGES,
+      languages: [],
+      syntaxModes: {},
       themes: THEMES,
       keyboards: KEYBOARDS,
       useSave: !hasParam,
@@ -271,7 +273,7 @@ let app = new Vue({
   },
   computed: {
     mode() {
-      return SYNTAX_MODES[this.language];
+      return this.syntaxModes[this.language];
     },
     successCount() {
       return this.tests.filter(t => t.result).length;
@@ -288,7 +290,18 @@ let app = new Vue({
       });
     }
   },
-  mounted() {},
+  async mounted() {
+    this.languages = await api.getLanguages()
+      .then((languages) => {
+        return languages.map((l) => {
+          return {
+            label: l.name,
+            value: l.id
+          }
+        })
+      })
+    this.syntaxModes = api.getSyntaxModes() || SYNTAX_MODES
+  },
   methods: {
     onChangeTab(tabName) {
       this.activeTabName = tabName;
